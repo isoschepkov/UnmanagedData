@@ -69,6 +69,10 @@ extension CoreDataModel: Codable {
             entity.allRelationships = findAll(for: entity)
             entity.allFetchedProperties = findAll(for: entity)
             
+            entity.parentAttributes = entity.allAttributes.filter { !entity.attributes.contains($0) }
+            entity.parentRelationships = entity.allRelationships.filter { !entity.relationships.contains($0) }
+            entity.parentFetchedProperties = entity.allFetchedProperties.filter { !entity.fetchedProperties.contains($0) }
+            
             entity.allChildren = findAllChildren(for: entity)
         }
     }

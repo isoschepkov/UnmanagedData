@@ -12,12 +12,28 @@ final class Entity {
     var attributes: [Attribute]
     var relationships: [Relationship]
     var fetchedProperties: [FetchedProperty]
+    var parentAttributes: [Attribute] = []
+    var parentRelationships: [Relationship] = []
+    var parentFetchedProperties: [FetchedProperty] = []
     var allAttributes: [Attribute] = []
     var allRelationships: [Relationship] = []
     var allFetchedProperties: [FetchedProperty] = []
     var userInfo: UserInfo?
     
-    init(name: String, parentName: String?, className: String, parentClassName: String? = nil, children: [Entity] = [], allChildren: [Entity] = [], isAbstract: Bool, codeGenerationType: CodeGenerationType?, attributes: [Attribute], relationships: [Relationship], fetchedProperties: [FetchedProperty], userInfo: UserInfo?) {
+    init(
+        name: String,
+        parentName: String?,
+        className: String,
+        parentClassName: String? = nil,
+        children: [Entity] = [],
+        allChildren: [Entity] = [],
+        isAbstract: Bool,
+        codeGenerationType: CodeGenerationType?,
+        attributes: [Attribute],
+        relationships: [Relationship],
+        fetchedProperties: [FetchedProperty],
+        userInfo: UserInfo?
+    ) {
         self.name = name
         self.parentName = parentName
         self.className = className
@@ -58,6 +74,9 @@ extension Entity: Codable {
         case attributes
         case relationships
         case fetchedProperties
+        case parentAttributes
+        case parentRelationships
+        case parentFetchedProperties
         case allAttributes
         case allRelationships
         case allFetchedProperties
@@ -92,6 +111,9 @@ extension Entity: Codable {
         try container.encode(self.attributes, forKey: .attributes)
         try container.encode(self.relationships, forKey: .relationships)
         try container.encode(self.fetchedProperties, forKey: .fetchedProperties)
+        try container.encode(self.parentAttributes, forKey: .parentAttributes)
+        try container.encode(self.parentRelationships, forKey: .parentRelationships)
+        try container.encode(self.parentFetchedProperties, forKey: .parentFetchedProperties)
         try container.encode(self.allAttributes, forKey: .allAttributes)
         try container.encode(self.allRelationships, forKey: .allRelationships)
         try container.encode(self.allFetchedProperties, forKey: .allFetchedProperties)
